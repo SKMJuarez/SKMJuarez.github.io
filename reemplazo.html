@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reemplazo de Caracteres</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #24292e; 
+            color: #fff;
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #28a745; 
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #333;
+        }
+
+        textarea:disabled {
+            background-color: #f9f9f9;
+        }
+
+        #botonLimpiar {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745; 
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #botonLimpiar:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        const reemplazos = {
+            'á': '˜',
+            'é': 'ž',
+            'í': '¢',
+            'ó': '¦',
+            'ú': 'ª',
+            'Á': '',
+            'É': '‡',
+            'Í': '‹',
+            'Ó': '',
+            'Ú': '“',
+            'ü': '¬',
+            'Ü': '•',
+            'ñ': '®',
+            'Ñ': '­',
+            '¡': '^',
+            '¿': '¯',
+            '&': '*',
+            'ç': 'œ',
+            'è': '',
+            'ö': '¨',
+            'ï': '¤'
+        };
+
+        function reemplazarCaracteres() {
+            const textoOriginal = document.getElementById('textoOriginal').value;
+            let textoModificado = textoOriginal;
+
+            for (let original in reemplazos) {
+                if (reemplazos.hasOwnProperty(original)) {
+                    const reemplazo = reemplazos[original];
+                    const regex = new RegExp(original, 'g');
+                    textoModificado = textoModificado.replace(regex, reemplazo);
+                }
+            }
+
+            document.getElementById('textoModificado').value = textoModificado;
+        }
+
+        function limpiarTexto() {
+            document.getElementById('textoOriginal').value = '';
+            document.getElementById('textoModificado').value = '';
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Reemplazo de Caracteres</h1>
+
+    <label for="textoOriginal">Texto original:</label>
+    <textarea id="textoOriginal" placeholder="Ingresa tu texto aquí" oninput="reemplazarCaracteres()"></textarea>
+
+    <label for="textoModificado">Texto modificado:</label>
+    <textarea id="textoModificado" readonly disabled></textarea>
+
+    <button id="botonLimpiar" onclick="limpiarTexto()">Limpiar</button>
+
+</body>
+</html>
