@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro y Temporizador</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        h1 {
+            color: #00bcd4;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .reloj {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #ffeb3b; 
+        }
+
+        .boton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333; 
+            color: #fff;
+            border: 2px solid #ff4081; 
+            border-radius: 50px; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            min-width: 120px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .boton:hover {
+            background-color: #ff4081;
+            transform: scale(1.05); 
+        }
+
+        .boton:active {
+            background-color: #e91e63;
+            transform: scale(0.95); 
+        }
+
+        .temporizador {
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1.2em;
+            margin: 5px;
+            width: 70px;
+            text-align: center;
+            border: 2px solid #ff4081;
+            background-color: #1e1e1e;
+            color: #fff;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #757575;
+        }
+    </style>
+    <script>
+        let cronometroInterval, temporizadorInterval;
+
+        let tiempoCronometro = 0;
+
+        function iniciarCronometro() {
+            cronometroInterval = setInterval(() => {
+                tiempoCronometro++;
+                document.getElementById("cronometro").textContent = formatearTiempo(tiempoCronometro);
+            }, 1000);
+        }
+
+        function pausarCronometro() {
+            clearInterval(cronometroInterval);
+        }
+
+        function reiniciarCronometro() {
+            clearInterval(cronometroInterval);
+            tiempoCronometro = 0;
+            document.getElementById("cronometro").textContent = "00:00:00";
+        }
+
+        function iniciarTemporizador() {
+            const horas = parseInt(document.getElementById("horas").value) || 0;
+            const minutos = parseInt(document.getElementById("minutos").value) || 0;
+            const segundos = parseInt(document.getElementById("segundos").value) || 0;
+            let tiempoRestante = horas * 3600 + minutos * 60 + segundos;
+
+            if (tiempoRestante <= 0) {
+                alert("Establece un tiempo válido.");
+                return;
+            }
+
+            temporizadorInterval = setInterval(() => {
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizadorInterval);
+                    alert("¡El tiempo ha terminado!");
+                    return;
+                }
+
+                tiempoRestante--;
+                document.getElementById("temporizador").textContent = formatearTiempo(tiempoRestante);
+            }, 1000);
+        }
+
+        function reiniciarTemporizador() {
+            clearInterval(temporizadorInterval);
+            document.getElementById("temporizador").textContent = "00:00:00";
+            document.getElementById("horas").value = "";
+            document.getElementById("minutos").value = "";
+            document.getElementById("segundos").value = "";
+        }
+
+        function formatearTiempo(segundos) {
+            const h = Math.floor(segundos / 3600);
+            const m = Math.floor((segundos % 3600) / 60);
+            const s = segundos % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        window.onload = function() {
+            document.body.style.opacity = 1;
+        };
+    </script>
+</head>
+<body>
+
+    <h1>Cronómetro y Temporizador</h1>
+
+    <div class="contenedor">
+        <!-- Cronómetro -->
+        <h2>Cronómetro</h2>
+        <div class="reloj" id="cronometro">00:00:00</div>
+        <button class="boton" onclick="iniciarCronometro()">Iniciar</button>
+        <button class="boton" onclick="pausarCronometro()">Pausar</button>
+        <button class="boton" onclick="reiniciarCronometro()">Reiniciar</button>
+
+        <!-- Temporizador -->
+        <div class="temporizador">
+            <h2>Temporizador</h2>
+            <div>
+                <input type="number" id="horas" placeholder="HH">
+                <input type="number" id="minutos" placeholder="MM">
+                <input type="number" id="segundos" placeholder="SS">
+            </div>
+            <div class="reloj" id="temporizador">00:00:00</div>
+            <button class="boton" onclick="iniciarTemporizador()">Iniciar Temporizador</button>
+            <button class="boton" onclick="reiniciarTemporizador()">Reiniciar Temporizador</button>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -7,18 +7,18 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212; /* Fondo oscuro moderno */
-            color: #e0e0e0; /* Color de texto claro */
+            background-color: #121212; 
+            color: #e0e0e0; 
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Para llenar toda la pantalla */
+            height: 100vh; 
             padding: 40px;
-            transition: background-color 0.5s; /* Transición de fondo suave */
-            opacity: 0; /* Comenzamos ocultos para la animación */
-            animation: fadeIn 1s forwards; /* Animación de aparición */
+            transition: background-color 0.5s; 
+            opacity: 0;
+            animation: fadeIn 1s forwards; 
         }
 
         @keyframes fadeIn {
@@ -31,52 +31,52 @@
         }
 
         h1 {
-            color: #00bcd4; /* Color del título */
+            color: #00bcd4;
             margin-bottom: 30px;
-            font-size: 3.5em; /* Ajustado el tamaño de fuente del título */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra ligera */
+            font-size: 3.5em; 
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
         }
 
         .descripcion {
-            margin: 20px 0; /* Ajustado el margen de la descripción */
-            font-size: 1.8em; /* Ajustado el tamaño de fuente para la descripción */
-            color: #b0bec5; /* Color más claro para la descripción */
+            margin: 20px 0; 
+            font-size: 1.8em; 
+            color: #b0bec5; 
             text-align: center;
         }
 
         .input-container {
             width: 100%;
-            max-width: 800px; /* Mantener el ancho máximo */
-            margin-bottom: 20px; /* Ajustado el margen inferior */
+            max-width: 800px; 
+            margin-bottom: 20px; 
         }
 
         label {
             display: block;
             margin-bottom: 10px;
-            font-size: 1.4em; /* Ajustado el tamaño de fuente de las etiquetas */
-            color: #b0bec5; /* Color más claro para las etiquetas */
+            font-size: 1.4em; 
+            color: #b0bec5; 
             padding: 10px;
         }
 
         textarea {
-            width: 100%; /* Ajustar ancho al 100% del contenedor */
-            height: 120px; /* Ajustada la altura del área de texto */
-            padding: 10px; /* Ajustado el padding */
-            font-size: 1.2em; /* Ajustado el tamaño de la fuente */
+            width: 100%; 
+            height: 120px; 
+            padding: 10px; 
+            font-size: 1.2em; 
             border: none;
             border-radius: 5px;
-            background-color: #1e1e1e; /* Fondo oscuro para el textarea */
-            color: #e0e0e0; /* Texto claro */
-            resize: none; /* Desactivar redimensionamiento */
+            background-color: #1e1e1e; 
+            color: #e0e0e0; 
+            resize: none; 
         }
 
         .botones {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px; /* Ajustado el espacio entre los botones */
-            opacity: 0; /* Comenzamos ocultos para la animación */
-            animation: slideIn 1s forwards; /* Animación de entrada */
-            animation-delay: 0.5s; /* Retraso para la animación */
+            margin-top: 20px; 
+            opacity: 0; 
+            animation: slideIn 1s forwards; 
+            animation-delay: 0.5s; 
         }
 
         @keyframes slideIn {
@@ -95,27 +95,27 @@
         }
 
         button {
-            padding: 15px 30px; /* Ajustado el tamaño del padding */
-            font-size: 1.2em; /* Ajustado el tamaño de la fuente */
-            background-color: #ff4081; /* Color moderno para los botones */
+            padding: 15px 30px; 
+            font-size: 1.2em; 
+            background-color: #ff4081; 
             color: #fff;
             border: none;
-            border-radius: 25px; /* Bordes redondeados */
+            border-radius: 25px; 
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s; /* Transiciones para el botón */
-            flex: 1; /* Hacer que los botones ocupen el mismo espacio */
-            margin: 0 10px; /* Espacio entre los botones */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+            transition: background-color 0.3s, transform 0.3s; 
+            flex: 1; 
+            margin: 0 10px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
         }
 
         button:hover {
-            background-color: #e91e63; /* Color más oscuro al pasar el mouse */
-            transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
+            background-color: #e91e63; 
+            transform: translateY(-3px); 
         }
 
         button:active {
-            transform: translateY(1px); /* Efecto al presionar el botón */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reducir la sombra al presionar */
+            transform: translateY(1px); 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
         }
     </style>
     <script>
@@ -161,7 +161,7 @@
         function limpiarTexto() {
             document.getElementById('textoOriginal').value = '';
             document.getElementById('textoModificado').value = '';
-            document.getElementById('cargarArchivo').value = ''; // Limpiar el input del archivo
+            document.getElementById('cargarArchivo').value = ''; 
         }
 
         function leerArchivo(event) {
@@ -173,7 +173,7 @@
                 lector.onload = function(e) {
                     const contenido = e.target.result;
                     document.getElementById('textoOriginal').value = contenido;
-                    reemplazarCaracteres(); // Opcional: actualiza el texto modificado automáticamente
+                    reemplazarCaracteres(); 
                 };
                 
                 lector.readAsText(archivo);
@@ -189,18 +189,18 @@
                 const a = document.createElement('a');
                 
                 a.href = url;
-                a.download = 'texto_modificado.txt'; // Cambia a .fxt si lo prefieres
+                a.download = 'texto_modificado.txt'; 
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-                URL.revokeObjectURL(url); // Liberar el objeto URL
+                URL.revokeObjectURL(url); 
             } else {
                 alert('No hay texto modificado para descargar.');
             }
         }
 
         window.onload = function() {
-            document.body.style.opacity = 1; // Hacer visible el cuerpo
+            document.body.style.opacity = 1;
         };
     </script>
 </head>

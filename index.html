@@ -7,57 +7,57 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212; /* Fondo oscuro moderno */
-            color: #e0e0e0; /* Color de texto claro */
+            background-color: #121212; 
+            color: #e0e0e0; 
             text-align: center;
             margin: 0;
-            padding: 30px; /* Ajustar el padding superior */
-            height: 100vh; /* Para llenar toda la pantalla */
+            padding: 30px; 
+            height: 100vh; 
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centra verticalmente */
-            align-items: center; /* Centra horizontalmente */
-            opacity: 0; /* Comenzamos ocultos para la animación */
-            transition: opacity 1s ease; /* Transición suave */
+            justify-content: center; 
+            align-items: center; 
+            opacity: 0; 
+            transition: opacity 1s ease; 
         }
 
         h1 {
-            color: #00bcd4; /* Color del título */
-            margin-bottom: 20px; /* Espaciado ajustado */
-            font-size: 3em; /* Tamaño de fuente grande para el título */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra ligera */
+            color: #00bcd4; 
+            margin-bottom: 20px; 
+            font-size: 3em; 
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
         }
 
         .descripcion {
-            margin-bottom: 30px; /* Espaciado entre la descripción y los botones */
-            font-size: 1.5em; /* Tamaño de fuente para la descripción */
-            color: #b0bec5; /* Color más claro para la descripción */
+            margin-bottom: 30px; 
+            font-size: 1.5em; 
+            color: #b0bec5; 
         }
 
         .boton {
             display: inline-block;
             padding: 15px 30px;
             font-size: 18px;
-            background-color: #ff4081; /* Color moderno para los botones */
+            background-color: #ff4081; 
             color: #fff;
             border: none;
             border-radius: 5px;
-            margin: 10px; /* Espaciado más pequeño */
+            margin: 10px; 
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s; /* Añadir transición de transformación */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
-            position: relative; /* Necesario para el efecto de animación */
-            animation: bounce 0.6s ease; /* Añadir animación de rebote */
+            transition: background-color 0.3s, transform 0.3s; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+            position: relative;
+            animation: bounce 0.6s ease;
         }
 
         .boton:hover {
-            background-color: #e91e63; /* Color más oscuro al pasar el mouse */
-            transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
+            background-color: #e91e63; 
+            transform: translateY(-3px);
         }
 
         .boton:active {
-            transform: translateY(1px); /* Efecto al presionar el botón */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reducir la sombra al presionar */
+            transform: translateY(1px); 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
         }
 
         @keyframes bounce {
@@ -80,11 +80,12 @@
 
     <button class="boton" onclick="window.location.href='reemplazo.html'">Reemplazador de Caracteres</button>
     <button class="boton" onclick="window.location.href='convertidor.html'">Conversor de Imágenes</button>
+    <button class="boton" onclick="window.location.href='generador-contraseñas.html'">Generador de Contraseñas</button>
+    <button class="boton" onclick="window.location.href='temporizador.html'">Temporizador</button>
 
     <script>
-        // Mostrar el contenido con una animación
         window.onload = function() {
-            document.body.style.opacity = 1; // Hacer visible el cuerpo
+            document.body.style.opacity = 1; 
         };
     </script>
 </body>
