@@ -7,42 +7,85 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #24292e;
-            color: #fff;
+            background-color: #121212; /* Fondo oscuro moderno */
+            color: #e0e0e0; /* Color de texto claro */
             text-align: center;
             margin: 0;
-            padding: 50px;
+            padding: 30px; /* Ajustar el padding superior */
+            height: 100vh; /* Para llenar toda la pantalla */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centra verticalmente */
+            align-items: center; /* Centra horizontalmente */
+            opacity: 0; /* Comenzamos ocultos para la animación */
+            transition: opacity 1s ease; /* Transición suave */
         }
 
         h1 {
-            color: #28a745;
-            margin-bottom: 40px;
+            color: #00bcd4; /* Color del título */
+            margin-bottom: 20px; /* Espaciado ajustado */
+            font-size: 3em; /* Tamaño de fuente grande para el título */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra ligera */
+        }
+
+        .descripcion {
+            margin-bottom: 30px; /* Espaciado entre la descripción y los botones */
+            font-size: 1.5em; /* Tamaño de fuente para la descripción */
+            color: #b0bec5; /* Color más claro para la descripción */
         }
 
         .boton {
             display: inline-block;
             padding: 15px 30px;
             font-size: 18px;
-            background-color: #28a745;
+            background-color: #ff4081; /* Color moderno para los botones */
             color: #fff;
             border: none;
             border-radius: 5px;
-            margin: 20px;
+            margin: 10px; /* Espaciado más pequeño */
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s; /* Añadir transición de transformación */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+            position: relative; /* Necesario para el efecto de animación */
+            animation: bounce 0.6s ease; /* Añadir animación de rebote */
         }
 
         .boton:hover {
-            background-color: #218838;
+            background-color: #e91e63; /* Color más oscuro al pasar el mouse */
+            transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
+        }
+
+        .boton:active {
+            transform: translateY(1px); /* Efecto al presionar el botón */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reducir la sombra al presionar */
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
     </style>
 </head>
 <body>
 
     <h1>Página Principal</h1>
+    <div class="descripcion">Elige una herramienta para comenzar:</div>
 
-    <button class="boton" onclick="window.location.href='reemplazo.html'">Reemplazador de caracteres</button>
-    <button class="boton" onclick="window.location.href='convertidor.html'">Conversor de imagenes</button>
+    <button class="boton" onclick="window.location.href='reemplazo.html'">Reemplazador de Caracteres</button>
+    <button class="boton" onclick="window.location.href='convertidor.html'">Conversor de Imágenes</button>
 
+    <script>
+        // Mostrar el contenido con una animación
+        window.onload = function() {
+            document.body.style.opacity = 1; // Hacer visible el cuerpo
+        };
+    </script>
 </body>
 </html>

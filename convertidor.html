@@ -7,37 +7,86 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #24292e;
-            color: #fff;
+            background-color: #121212; /* Fondo oscuro moderno */
+            color: #e0e0e0; /* Color de texto claro */
             text-align: center;
-            padding: 20px;
+            padding: 40px; /* Aumentar el padding */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Para llenar toda la pantalla */
+            opacity: 0; /* Comenzamos ocultos para la animación */
+            animation: fadeIn 1s forwards; /* Animación de aparición */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         h1 {
-            color: #28a745;
+            color: #00bcd4; /* Color del título */
+            margin-bottom: 30px; /* Aumentar margen inferior */
+            font-size: 4em; /* Tamaño de fuente grande para el título */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra ligera */
         }
 
         label, select {
-            font-size: 16px;
+            font-size: 20px; /* Aumentar tamaño de fuente */
             margin-top: 20px;
+            color: #b0bec5; /* Color más claro para las etiquetas */
         }
 
         #inputImagen {
             margin: 20px;
+            font-size: 18px; /* Aumentar tamaño de fuente para el input */
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #28a745;
-            color: white;
+            padding: 15px 30px; /* Aumentar tamaño de botón */
+            font-size: 20px; /* Aumentar tamaño de fuente del botón */
+            background-color: #ff4081; /* Color moderno para los botones */
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px; /* Bordes redondeados */
             cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* Transiciones para el botón */
+            margin-top: 30px; /* Aumentar margen superior */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+            opacity: 0; /* Comenzamos ocultos para la animación */
+            animation: slideIn 1s forwards; /* Animación de entrada */
+            animation-delay: 0.5s; /* Retraso para la animación */
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         button:hover {
-            background-color: #218838;
+            background-color: #e91e63; /* Color más oscuro al pasar el mouse */
+            transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
+        }
+
+        button:active {
+            transform: translateY(1px); /* Efecto al presionar el botón */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reducir la sombra al presionar */
         }
     </style>
     <script>
@@ -71,6 +120,10 @@
 
             reader.readAsDataURL(input.files[0]);
         }
+
+        window.onload = function() {
+            document.body.style.opacity = 1; // Hacer visible el cuerpo
+        };
     </script>
 </head>
 <body>
@@ -88,7 +141,6 @@
         <option value="bmp">BMP</option>
     </select>
 
-    <br><br>
     <button onclick="convertirImagen()">Convertir Imagen</button>
 
 </body>

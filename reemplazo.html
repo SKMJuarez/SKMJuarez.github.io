@@ -7,55 +7,115 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #24292e; 
-            color: #fff;
-            text-align: center;
-            margin: 20px;
-            padding: 20px;
+            background-color: #121212; /* Fondo oscuro moderno */
+            color: #e0e0e0; /* Color de texto claro */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Para llenar toda la pantalla */
+            padding: 40px;
+            transition: background-color 0.5s; /* Transición de fondo suave */
+            opacity: 0; /* Comenzamos ocultos para la animación */
+            animation: fadeIn 1s forwards; /* Animación de aparición */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         h1 {
-            color: #28a745; 
-            margin-bottom: 20px;
+            color: #00bcd4; /* Color del título */
+            margin-bottom: 30px;
+            font-size: 3.5em; /* Ajustado el tamaño de fuente del título */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra ligera */
+        }
+
+        .descripcion {
+            margin: 20px 0; /* Ajustado el margen de la descripción */
+            font-size: 1.8em; /* Ajustado el tamaño de fuente para la descripción */
+            color: #b0bec5; /* Color más claro para la descripción */
+            text-align: center;
+        }
+
+        .input-container {
+            width: 100%;
+            max-width: 800px; /* Mantener el ancho máximo */
+            margin-bottom: 20px; /* Ajustado el margen inferior */
         }
 
         label {
             display: block;
             margin-bottom: 10px;
-            font-size: 16px;
+            font-size: 1.4em; /* Ajustado el tamaño de fuente de las etiquetas */
+            color: #b0bec5; /* Color más claro para las etiquetas */
+            padding: 10px;
         }
 
         textarea {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 20px;
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            background-color: #fff;
-            color: #333;
-        }
-
-        textarea:disabled {
-            background-color: #f9f9f9;
-        }
-
-        #botonLimpiar {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #28a745; 
-            color: #fff;
+            width: 100%; /* Ajustar ancho al 100% del contenedor */
+            height: 120px; /* Ajustada la altura del área de texto */
+            padding: 10px; /* Ajustado el padding */
+            font-size: 1.2em; /* Ajustado el tamaño de la fuente */
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            background-color: #1e1e1e; /* Fondo oscuro para el textarea */
+            color: #e0e0e0; /* Texto claro */
+            resize: none; /* Desactivar redimensionamiento */
         }
 
-        #botonLimpiar:hover {
-            background-color: #218838;
+        .botones {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px; /* Ajustado el espacio entre los botones */
+            opacity: 0; /* Comenzamos ocultos para la animación */
+            animation: slideIn 1s forwards; /* Animación de entrada */
+            animation-delay: 0.5s; /* Retraso para la animación */
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        button {
+            padding: 15px 30px; /* Ajustado el tamaño del padding */
+            font-size: 1.2em; /* Ajustado el tamaño de la fuente */
+            background-color: #ff4081; /* Color moderno para los botones */
+            color: #fff;
+            border: none;
+            border-radius: 25px; /* Bordes redondeados */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* Transiciones para el botón */
+            flex: 1; /* Hacer que los botones ocupen el mismo espacio */
+            margin: 0 10px; /* Espacio entre los botones */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+        }
+
+        button:hover {
+            background-color: #e91e63; /* Color más oscuro al pasar el mouse */
+            transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
+        }
+
+        button:active {
+            transform: translateY(1px); /* Efecto al presionar el botón */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reducir la sombra al presionar */
         }
     </style>
     <script>
@@ -101,20 +161,73 @@
         function limpiarTexto() {
             document.getElementById('textoOriginal').value = '';
             document.getElementById('textoModificado').value = '';
+            document.getElementById('cargarArchivo').value = ''; // Limpiar el input del archivo
         }
+
+        function leerArchivo(event) {
+            const archivo = event.target.files[0];
+            
+            if (archivo) {
+                const lector = new FileReader();
+                
+                lector.onload = function(e) {
+                    const contenido = e.target.result;
+                    document.getElementById('textoOriginal').value = contenido;
+                    reemplazarCaracteres(); // Opcional: actualiza el texto modificado automáticamente
+                };
+                
+                lector.readAsText(archivo);
+            }
+        }
+
+        function descargarTexto() {
+            const textoModificado = document.getElementById('textoModificado').value;
+            
+            if (textoModificado) {
+                const blob = new Blob([textoModificado], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                
+                a.href = url;
+                a.download = 'texto_modificado.txt'; // Cambia a .fxt si lo prefieres
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url); // Liberar el objeto URL
+            } else {
+                alert('No hay texto modificado para descargar.');
+            }
+        }
+
+        window.onload = function() {
+            document.body.style.opacity = 1; // Hacer visible el cuerpo
+        };
     </script>
 </head>
 <body>
 
     <h1>Reemplazo de Caracteres</h1>
+    <div class="descripcion">¡Ingresa tu texto y observa cómo los caracteres se transforman mágicamente!</div>
 
-    <label for="textoOriginal">Texto original:</label>
-    <textarea id="textoOriginal" placeholder="Ingresa tu texto aquí" oninput="reemplazarCaracteres()"></textarea>
+    <div class="input-container">
+        <label for="cargarArchivo">Cargar archivo de texto:</label>
+        <input type="file" id="cargarArchivo" accept=".txt" onchange="leerArchivo(event)">
+    </div>
 
-    <label for="textoModificado">Texto modificado:</label>
-    <textarea id="textoModificado" readonly disabled></textarea>
+    <div class="input-container">
+        <label for="textoOriginal">Texto original:</label>
+        <textarea id="textoOriginal" placeholder="Ingresa tu texto aquí" oninput="reemplazarCaracteres()"></textarea>
+    </div>
 
-    <button id="botonLimpiar" onclick="limpiarTexto()">Limpiar</button>
+    <div class="input-container">
+        <label for="textoModificado">Texto modificado:</label>
+        <textarea id="textoModificado" readonly></textarea>
+    </div>
+
+    <div class="botones">
+        <button onclick="limpiarTexto()">Limpiar</button>
+        <button onclick="descargarTexto()">Descargar Texto Modificado</button>
+    </div>
 
 </body>
 </html>
