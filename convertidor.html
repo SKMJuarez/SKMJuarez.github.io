@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Imágenes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; 
+            color: #e0e0e0; 
+            text-align: center;
+            padding: 40px; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            opacity: 0; 
+            animation: fadeIn 1s forwards; 
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #00bcd4; 
+            margin-bottom: 30px; 
+            font-size: 4em; 
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+        }
+
+        label, select {
+            font-size: 20px; 
+            margin-top: 20px;
+            color: #b0bec5; 
+        }
+
+        #inputImagen {
+            margin: 20px;
+            font-size: 18px; 
+        }
+
+        button {
+            padding: 15px 30px; 
+            font-size: 20px; 
+            background-color: #ff4081; 
+            color: #fff;
+            border: none;
+            border-radius: 25px; 
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0; 
+            animation: slideIn 1s forwards; 
+            animation-delay: 0.5s; 
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        button:hover {
+            background-color: #e91e63; 
+            transform: translateY(-3px); 
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+        }
+    </style>
+    <script>
+        function convertirImagen() {
+            const input = document.getElementById('inputImagen');
+            const formato = document.getElementById('formato').value;
+
+            if (!input.files[0]) {
+                alert("Por favor, selecciona una imagen.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.src = e.target.result;
+
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    const link = document.createElement('a');
+                    link.download = 'imagen_convertida.' + formato;
+                    link.href = canvas.toDataURL(`image/${formato}`);
+                    link.click();
+                };
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        window.onload = function() {
+            document.body.style.opacity = 1; 
+        };
+    </script>
+</head>
+<body>
+
+    <h1>Conversor de Imágenes</h1>
+
+    <label for="inputImagen">Selecciona una imagen:</label>
+    <input type="file" id="inputImagen" accept="image/*">
+
+    <label for="formato">Convertir a:</label>
+    <select id="formato">
+        <option value="png">PNG</option>
+        <option value="jpg">JPG</option>
+        <option value="gif">GIF</option>
+        <option value="bmp">BMP</option>
+    </select>
+
+    <button onclick="convertirImagen()">Convertir Imagen</button>
+
+</body>
+</html>

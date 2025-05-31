@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reemplazo de Caracteres</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 40px;
+            transition: background-color 0.5s;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color: #00e5ff;
+            margin-bottom: 30px;
+            font-size: 3.5em;
+            text-shadow: 2px 2px 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .descripcion {
+            margin: 20px 0;
+            font-size: 1.8em;
+            color: #b0bec5;
+            text-align: center;
+        }
+
+        .input-container {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+            color: #b0bec5;
+            padding: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 140px;
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            resize: none;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        input[type="file"] {
+            color: #e0e0e0;
+            background-color: #1e1e1e;
+            border: 1px solid #00e5ff;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            opacity: 0;
+            animation: slideIn 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateX(100%); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            margin: 0 10px;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.5);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #e10050, #ff6a00);
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 10px rgba(255, 65, 108, 0.3);
+        }
+    </style>
+    <script>
+        const reemplazos = {
+            'á': '˜','é': 'ž','í': '¢','ó': '¦','ú': 'ª',
+            'Á': '','É': '‡','Í': '‹','Ó': '','Ú': '“',
+            'ü': '¬','Ü': '•','ñ': '®','Ñ': '­','¡': '^',
+            '¿': '¯','&': '*','ç': 'œ','è': '','ö': '¨','ï': '¤'
+        };
+
+        function reemplazarCaracteres() {
+            const textoOriginal = document.getElementById('textoOriginal').value;
+            let textoModificado = textoOriginal;
+
+            for (let original in reemplazos) {
+                const reemplazo = reemplazos[original];
+                textoModificado = textoModificado.split(original).join(reemplazo);
+            }
+
+            document.getElementById('textoModificado').value = textoModificado;
+        }
+
+        function limpiarTexto() {
+            document.getElementById('textoOriginal').value = '';
+            document.getElementById('textoModificado').value = '';
+            document.getElementById('cargarArchivo').value = '';
+        }
+
+        function leerArchivo(event) {
+            const archivo = event.target.files[0];
+            if (archivo) {
+                const lector = new FileReader();
+                lector.onload = e => {
+                    document.getElementById('textoOriginal').value = e.target.result;
+                    reemplazarCaracteres();
+                };
+                lector.readAsText(archivo);
+            }
+        }
+
+        function descargarTexto() {
+            const textoModificado = document.getElementById('textoModificado').value;
+            if (textoModificado) {
+                const blob = new Blob([textoModificado], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'texto_modificado.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } else {
+                alert('No hay texto modificado para descargar.');
+            }
+        }
+
+        window.onload = () => { document.body.style.opacity = 1; };
+    </script>
+</head>
+<body>
+    <h1>Reemplazo de Caracteres</h1>
+    <div class="descripcion">Ingresa tu texto o carga un archivo para transformarlo como un hacker de élite.</div>
+
+    <div class="input-container">
+        <label for="cargarArchivo">📂 Cargar archivo de texto:</label>
+        <input type="file" id="cargarArchivo" accept=".txt" onchange="leerArchivo(event)">
+    </div>
+
+    <div class="input-container">
+        <label for="textoOriginal">✏️ Texto original:</label>
+        <textarea id="textoOriginal" placeholder="Escribe algo mágico aquí..." oninput="reemplazarCaracteres()"></textarea>
+    </div>
+
+    <div class="input-container">
+        <label for="textoModificado">🧙‍♂️ Texto modificado:</label>
+        <textarea id="textoModificado" readonly></textarea>
+    </div>
+
+    <div class="botones">
+        <button onclick="limpiarTexto()">🧹 Limpiar</button>
+        <button onclick="descargarTexto()">💾 Descargar</button>
+    </div>
+</body>
+</html>

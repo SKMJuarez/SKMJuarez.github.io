@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página Principal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --accent: #ff4081;
+      --accent-hover: #e91e63;
+      --secondary: #b0bec5;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #1e1e1e;
+        --accent: #d81b60;
+        --accent-hover: #c2185b;
+        --secondary: #555;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .descripcion {
+      font-size: 1.25rem;
+      color: var(--secondary);
+      margin-bottom: 2rem;
+    }
+
+    .botones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .boton {
+      background-color: var(--accent);
+      color: #fff;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .boton:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-4px);
+    }
+
+    .boton:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .boton svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .descripcion {
+        font-size: 1rem;
+      }
+
+      .boton {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Página Principal</h1>
+  <div class="descripcion">Elige una herramienta para comenzar:</div>
+
+  <div class="botones">
+    <button class="boton" onclick="window.location.href='reemplazo.html'" aria-label="Reemplazador de Caracteres">
+      <i data-lucide="replace"></i> Reemplazador
+    </button>
+    <button class="boton" onclick="window.location.href='convertidor.html'" aria-label="Conversor de Imágenes">
+      <i data-lucide="image"></i> Conversor
+    </button>
+    <button class="boton" onclick="window.location.href='generador-contraseñas.html'" aria-label="Generador de Contraseñas">
+      <i data-lucide="lock"></i> Contraseñas
+    </button>
+    <button class="boton" onclick="window.location.href='temporizador.html'" aria-label="Temporizador">
+      <i data-lucide="timer"></i> Temporizador
+    </button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

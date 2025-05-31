@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Ultra Generador de Contraseñas ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/lock.png">
+    <style>
+        :root {
+            --bg-color: #0f1115;
+            --card-bg: #1a1d24;
+            --text-color: #f5f5f5;
+            --accent-color: #ff4081;
+            --button-hover: #e91e63;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .descripcion {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #b0bec5;
+        }
+
+        .resultado {
+            font-size: 1.6em;
+            padding: 15px;
+            background: #2c2f38;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+            user-select: all;
+        }
+
+        .configuracion label {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .botones {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: var(--button-hover);
+            transform: scale(1.05);
+        }
+
+        .medidor-seguridad {
+            width: 100%;
+            height: 20px;
+            background-color: #444;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .medidor-seguridad div {
+            height: 100%;
+            transition: width 0.5s;
+        }
+
+        .configuracion {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function generarContraseña() {
+            const longitud = +document.getElementById('longitud').value;
+            const incluirMinusculas = document.getElementById('minusculas').checked;
+            const incluirMayusculas = document.getElementById('mayusculas').checked;
+            const incluirNumeros = document.getElementById('numeros').checked;
+            const incluirSimbolos = document.getElementById('simbolos').checked;
+            const evitarSimilares = document.getElementById('evitarSimilares').checked;
+
+            let caracteres = '';
+            const minusculas = 'abcdefghijklmnopqrstuvwxyz';
+            const mayusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const numeros = '0123456789';
+            const simbolos = '!@#$%^&*()_+[]{}|;:,.<>?';
+
+            if (incluirMinusculas) caracteres += minusculas;
+            if (incluirMayusculas) caracteres += mayusculas;
+            if (incluirNumeros) caracteres += numeros;
+            if (incluirSimbolos) caracteres += simbolos;
+
+            if (evitarSimilares) {
+                caracteres = caracteres.replace(/[l1O0]/g, '');
+            }
+
+            let contraseña = '';
+            for (let i = 0; i < longitud; i++) {
+                contraseña += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+
+            document.getElementById('resultado').textContent = contraseña;
+            actualizarSeguridad(contraseña);
+        }
+
+        function copiarAlPortapapeles() {
+            const texto = document.getElementById('resultado').textContent;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('Contraseña copiada al portapapeles ✅');
+            });
+        }
+
+        function actualizarSeguridad(contraseña) {
+            const medidor = document.getElementById('medidorSeguridad');
+            let fuerza = 0;
+
+            if (/[a-z]/.test(contraseña)) fuerza++;
+            if (/[A-Z]/.test(contraseña)) fuerza++;
+            if (/[0-9]/.test(contraseña)) fuerza++;
+            if (/[^a-zA-Z0-9]/.test(contraseña)) fuerza++;
+
+            const porcentaje = (fuerza / 4) * 100;
+            medidor.style.width = porcentaje + '%';
+            medidor.style.backgroundColor = porcentaje > 75 ? 'limegreen' : (porcentaje > 50 ? 'goldenrod' : 'crimson');
+        }
+
+        window.onload = () => {
+            document.body.style.opacity = 1;
+            generarContraseña();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Generador de Contraseñas Ultra Seguro</h1>
+        <div class="descripcion">Crea contraseñas imposibles de adivinar, incluso por tu ex psicópata.</div>
+
+        <div class="resultado" id="resultado">Tu contraseña aparecerá aquí</div>
+
+        <div class="configuracion">
+            <label>Longitud: <span id="valorLongitud">16</span></label>
+            <input type="range" id="longitud" min="8" max="128" value="16" oninput="document.getElementById('valorLongitud').textContent = this.value">
+
+            <label><input type="checkbox" id="minusculas" checked> Letras minúsculas</label>
+            <label><input type="checkbox" id="mayusculas" checked> Letras mayúsculas</label>
+            <label><input type="checkbox" id="numeros" checked> Números</label>
+            <label><input type="checkbox" id="simbolos" checked> Símbolos</label>
+            <label><input type="checkbox" id="evitarSimilares"> Evitar caracteres similares (l, 1, O, 0)</label>
+        </div>
+
+        <div class="medidor-seguridad">
+            <div id="medidorSeguridad" style="width: 0%; background-color: crimson;"></div>
+        </div>
+
+        <div class="botones">
+            <button onclick="generarContraseña()">Generar 🎩</button>
+            <button onclick="copiarAlPortapapeles()">Copiar 📋</button>
+        </div>
+    </div>
+</body>
+</html>
