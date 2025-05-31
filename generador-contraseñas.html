@@ -3,127 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Contraseñas</title>
+    <title>✨ Ultra Generador de Contraseñas ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/lock.png">
     <style>
+        :root {
+            --bg-color: #0f1115;
+            --card-bg: #1a1d24;
+            --text-color: #f5f5f5;
+            --accent-color: #ff4081;
+            --button-hover: #e91e63;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212; /* Fondo oscuro moderno */
-            color: #e0e0e0; /* Color de texto claro */
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 40px;
-            text-align: center;
+            padding: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Llenar pantalla */
-            transition: background-color 0.5s;
+            height: 100vh;
+            animation: fadeIn 1s ease-in-out forwards;
             opacity: 0;
-            animation: fadeIn 1s forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
             to { opacity: 1; }
         }
 
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
         h1 {
-            color: #00bcd4; /* Color del título */
-            margin-bottom: 20px;
-            font-size: 3em; /* Tamaño grande */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: var(--accent-color);
         }
 
         .descripcion {
-            margin-bottom: 30px;
-            font-size: 1.5em;
-            color: #b0bec5;
-        }
-
-        .contenedor {
-            max-width: 700px;
-            width: 100%;
-            padding: 20px;
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .configuracion {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        label {
             font-size: 1.2em;
+            margin-bottom: 30px;
             color: #b0bec5;
+        }
+
+        .resultado {
+            font-size: 1.6em;
+            padding: 15px;
+            background: #2c2f38;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+            user-select: all;
+        }
+
+        .configuracion label {
+            display: flex;
+            align-items: center;
             margin: 10px 0;
+            font-size: 1em;
         }
 
         input[type="range"] {
             width: 100%;
-            margin-bottom: 10px;
         }
 
         input[type="checkbox"] {
             margin-right: 10px;
         }
 
-        .resultado {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #2c2c2c;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.5em;
-            color: #fff;
-            margin-bottom: 20px;
-            word-wrap: break-word;
-        }
-
         .botones {
+            margin-top: 30px;
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            margin-top: 20px;
+            gap: 15px;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 18px;
-            background-color: #ff4081;
+            background: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 25px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1em;
             cursor: pointer;
-            margin: 0 10px;
-            transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: #e91e63;
-            transform: translateY(-3px);
+            background: var(--button-hover);
+            transform: scale(1.05);
         }
 
         .medidor-seguridad {
             width: 100%;
             height: 20px;
-            background-color: #2c2c2c;
-            border-radius: 5px;
-            margin-top: 10px;
+            background-color: #444;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
         }
 
         .medidor-seguridad div {
             height: 100%;
-            border-radius: 5px;
+            transition: width 0.5s;
+        }
+
+        .configuracion {
+            text-align: left;
+            margin-bottom: 20px;
         }
     </style>
     <script>
         function generarContraseña() {
-            const longitud = document.getElementById('longitud').value;
+            const longitud = +document.getElementById('longitud').value;
             const incluirMinusculas = document.getElementById('minusculas').checked;
             const incluirMayusculas = document.getElementById('mayusculas').checked;
             const incluirNumeros = document.getElementById('numeros').checked;
@@ -157,13 +163,12 @@
         function copiarAlPortapapeles() {
             const texto = document.getElementById('resultado').textContent;
             navigator.clipboard.writeText(texto).then(() => {
-                alert('Contraseña copiada al portapapeles');
+                alert('Contraseña copiada al portapapeles ✅');
             });
         }
 
         function actualizarSeguridad(contraseña) {
             const medidor = document.getElementById('medidorSeguridad');
-            const longitud = contraseña.length;
             let fuerza = 0;
 
             if (/[a-z]/.test(contraseña)) fuerza++;
@@ -173,44 +178,41 @@
 
             const porcentaje = (fuerza / 4) * 100;
             medidor.style.width = porcentaje + '%';
-            medidor.style.backgroundColor = porcentaje > 75 ? 'green' : (porcentaje > 50 ? 'orange' : 'red');
+            medidor.style.backgroundColor = porcentaje > 75 ? 'limegreen' : (porcentaje > 50 ? 'goldenrod' : 'crimson');
+        }
+
+        window.onload = () => {
+            document.body.style.opacity = 1;
+            generarContraseña();
         }
     </script>
 </head>
 <body>
+    <div class="container">
+        <h1>🔐 Generador de Contraseñas Ultra Seguro</h1>
+        <div class="descripcion">Crea contraseñas imposibles de adivinar, incluso por tu ex psicópata.</div>
 
-    <h1>Generador de Contraseñas</h1>
-    <div class="descripcion">Genera contraseñas seguras con múltiples opciones personalizables.</div>
-
-    <div class="contenedor">
-        <div class="resultado" id="resultado">Aquí aparecerá tu contraseña</div>
+        <div class="resultado" id="resultado">Tu contraseña aparecerá aquí</div>
 
         <div class="configuracion">
-            <label for="longitud">Longitud de la contraseña: <span id="valorLongitud">16</span></label>
+            <label>Longitud: <span id="valorLongitud">16</span></label>
             <input type="range" id="longitud" min="8" max="128" value="16" oninput="document.getElementById('valorLongitud').textContent = this.value">
 
-            <label><input type="checkbox" id="minusculas" checked> Incluir letras minúsculas</label>
-            <label><input type="checkbox" id="mayusculas" checked> Incluir letras mayúsculas</label>
-            <label><input type="checkbox" id="numeros" checked> Incluir números</label>
-            <label><input type="checkbox" id="simbolos" checked> Incluir símbolos</label>
+            <label><input type="checkbox" id="minusculas" checked> Letras minúsculas</label>
+            <label><input type="checkbox" id="mayusculas" checked> Letras mayúsculas</label>
+            <label><input type="checkbox" id="numeros" checked> Números</label>
+            <label><input type="checkbox" id="simbolos" checked> Símbolos</label>
             <label><input type="checkbox" id="evitarSimilares"> Evitar caracteres similares (l, 1, O, 0)</label>
         </div>
 
         <div class="medidor-seguridad">
-            <div id="medidorSeguridad" style="width: 0%; background-color: red;"></div>
+            <div id="medidorSeguridad" style="width: 0%; background-color: crimson;"></div>
         </div>
 
         <div class="botones">
-            <button onclick="generarContraseña()">Generar Contraseña</button>
-            <button onclick="copiarAlPortapapeles()">Copiar al Portapapeles</button>
+            <button onclick="generarContraseña()">Generar 🎩</button>
+            <button onclick="copiarAlPortapapeles()">Copiar 📋</button>
         </div>
     </div>
-
-    <script>
-        window.onload = function() {
-            document.body.style.opacity = 1;
-            generarContraseña(); // Generar una contraseña por defecto al cargar la página
-        };
-    </script>
 </body>
 </html>
